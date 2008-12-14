@@ -103,7 +103,7 @@ sub astar {
     $pq->key_insert(0, $from);
     while ($pq->count) {
         my $cost = $pq->top_key;
-        my ($vertex, $path) = @{ $pq->extract_top };
+        my $vertex = $pq->extract_top;
         if ($scorer) {
             my $score = $scorer->($vertex);
             return (\%pred, $vertex) if $score eq 'q';
