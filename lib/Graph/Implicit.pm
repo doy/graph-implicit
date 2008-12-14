@@ -28,6 +28,9 @@ sub edges {
 }
 
 sub neighbors {
+    my $self = shift;
+    my ($from) = @_;
+    return $self->($from);
 }
 
 # traversal
@@ -73,7 +76,7 @@ sub dijkstra {
             ($max_vert, $max_score) = ($vertex, $score)
                 if ($score > $max_score);
         }
-        $neighbors{$vertex} = [$self->($vertex)]
+        $neighbors{$vertex} = [$self->neighbors($vertex)]
             unless exists $neighbors{$vertex};
         for my $neighbor (@{ $neighbors{$vertex} }) {
             my ($vert_n, $weight_n) = @{ $neighbor };
