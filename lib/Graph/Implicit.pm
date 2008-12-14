@@ -19,6 +19,41 @@ sub new {
     return bless $edge_calculator, $class;
 }
 
+# generic information
+
+sub vertices {
+}
+
+sub edges {
+}
+
+sub neighbors {
+}
+
+# traversal
+
+sub bfs {
+}
+
+sub dfs {
+}
+
+sub iddfs {
+}
+
+# minimum spanning tree
+
+sub boruvka {
+}
+
+sub prim {
+}
+
+sub kruskal {
+}
+
+# single source shortest path
+
 sub dijkstra {
     my $self = shift;
     my $from = shift;
@@ -52,6 +87,20 @@ sub dijkstra {
         }
     }
     return \%pred, $max_vert;
+}
+
+sub astar {
+}
+
+sub bellman_ford {
+}
+
+# all pairs shortest path
+
+sub johnson {
+}
+
+sub floyd_warshall {
 }
 
 1;
