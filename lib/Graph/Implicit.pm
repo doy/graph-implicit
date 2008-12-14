@@ -35,10 +35,36 @@ sub neighbors {
 
 # traversal
 
+sub _traversal {
+    my $self = shift;
+    my ($start, $code, $insert, $remove) = @_;
+    my @bag;
+    my %marked;
+    $insert->(\@bag, $start);
+    while (@bag) {
+        my $vertex = $remove->(\@bag);
+        if (not exists $marked{$vertex}) {
+            $code->($vertex);
+            $marked{$vertex} = 1;
+            $insert->(\@bag, $_) for $self->neighbors($vertex);
+        }
+    }
+}
+
 sub bfs {
+    my $self = shift;
+    my ($start, $code) = @_;
+    return $self->_traversal($start, $code,
+                             sub { push @{ $_[0] }, $_[1] },
+                             sub { shift @{ $_[0] } });
 }
 
 sub dfs {
+    my $self = shift;
+    my ($start, $code) = @_;
+    return $self->_traversal($start, $code,
+                             sub { push @{ $_[0] }, $_[1] },
+                             sub { pop @{ $_[0] } });
 }
 
 sub iddfs {
