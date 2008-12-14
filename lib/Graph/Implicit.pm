@@ -22,15 +22,23 @@ sub new {
 sub dijkstra {
     my $self = shift;
     my $from = shift;
+    my $scorer = shift;
 
     my $pq = Heap::Simple->new(elements => "Any");
     my %neighbors;
+    my ($max_vert, $max_score) = (undef, 0);
     my %dist = ($from => 0);
     my %pred = ($from => undef);
     $pq->key_insert(0, $from);
     while ($pq->count) {
         my $cost = $pq->top_key;
         my ($vertex, $path) = @{ $pq->extract_top };
+        if ($scorer) {
+            my $score = $scorer->($vertex);
+            return (\%pred, $vertex) if $score eq 'q';
+            ($max_vert, $max_score) = ($vertex, $score)
+                if ($score > $max_score);
+        }
         $neighbors{$vertex} = [$self->($vertex)]
             unless exists $neighbors{$vertex};
         for my $neighbor (@{ $neighbors{$vertex} })) {
@@ -43,7 +51,7 @@ sub dijkstra {
             }
         }
     }
-    return \%pred;
+    return \%pred, $max_vert;
 }
 
 1;
