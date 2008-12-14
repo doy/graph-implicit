@@ -56,8 +56,7 @@ sub kruskal {
 
 sub dijkstra {
     my $self = shift;
-    my $from = shift;
-    my $scorer = shift;
+    my ($from, $scorer) = @_;
 
     my $pq = Heap::Simple->new(elements => "Any");
     my %neighbors;
