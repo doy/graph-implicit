@@ -35,22 +35,25 @@ sub neighbors {
 
 # traversal
 
-# XXX: if we can generalize @bag to allow for a heap, and store edges rather
-# than vertices in the bag, then we can implement prim with this too
+# XXX: if we can generalize @bag to allow for a heap, then we can implement
+# prim with this too
 sub _traversal {
     my $self = shift;
     my ($start, $code, $insert, $remove) = @_;
     my @bag;
     my %marked;
-    $insert->(\@bag, $start);
+    my %pred;
+    $insert->(\@bag, [undef, $start]);
     while (@bag) {
-        my $vertex = $remove->(\@bag);
+        my ($pred, $vertex) = @{ $remove->(\@bag) };
         if (not exists $marked{$vertex}) {
-            $code->($vertex);
+            $code->($pred, $vertex);
+            $pred{$vertex} = $pred;
             $marked{$vertex} = 1;
             $insert->(\@bag, $_) for $self->neighbors($vertex);
         }
     }
+    return \%pred;
 }
 
 sub bfs {
