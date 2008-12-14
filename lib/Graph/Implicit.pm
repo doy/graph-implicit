@@ -60,6 +60,12 @@ sub kruskal {
 sub dijkstra {
     my $self = shift;
     my ($from, $scorer) = @_;
+    return $self->astar($from, sub { 0 }, $scorer);
+}
+
+sub astar {
+    my $self = shift;
+    my ($from, $heuristic, $scorer) = @_;
 
     my $pq = Heap::Simple->new(elements => "Any");
     my %neighbors;
@@ -80,7 +86,7 @@ sub dijkstra {
             unless exists $neighbors{$vertex};
         for my $neighbor (@{ $neighbors{$vertex} }) {
             my ($vert_n, $weight_n) = @{ $neighbor };
-            my $dist = $cost + $weight_n;
+            my $dist = $cost + $weight_n + $heuristic->($vertex, $vert_n);
             if (!defined $dist{$vert_n} || $dist < $dist{$vert_n}) {
                 $dist{$vert_n} = $dist;
                 $pred{$vert_n} = $vertex;
@@ -89,9 +95,6 @@ sub dijkstra {
         }
     }
     return \%pred, $max_vert;
-}
-
-sub astar {
 }
 
 sub bellman_ford {
