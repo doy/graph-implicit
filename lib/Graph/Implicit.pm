@@ -22,9 +22,19 @@ sub new {
 # generic information
 
 sub vertices {
+    my $self = shift;
+    my ($start) = @_;
+    my @vertices;
+    $self->dfs($start, sub { push @vertices, $_[1] });
+    return @vertices;
 }
 
+# XXX: probably pretty inefficient... can we do better?
 sub edges {
+    my $self = shift;
+    my ($start) = @_;
+    map { my $v = $_; map { [$v, $_] } $self->neighbors($v) }
+        $self->vertices($start);
 }
 
 sub neighbors {
