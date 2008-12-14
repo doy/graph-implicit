@@ -35,6 +35,8 @@ sub neighbors {
 
 # traversal
 
+# XXX: if we can generalize @bag to allow for a heap, and store edges rather
+# than vertices in the bag, then we can implement prim with this too
 sub _traversal {
     my $self = shift;
     my ($start, $code, $insert, $remove) = @_;
