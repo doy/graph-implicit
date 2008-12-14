@@ -41,7 +41,7 @@ sub dijkstra {
         }
         $neighbors{$vertex} = [$self->($vertex)]
             unless exists $neighbors{$vertex};
-        for my $neighbor (@{ $neighbors{$vertex} })) {
+        for my $neighbor (@{ $neighbors{$vertex} }) {
             my ($vert_n, $weight_n) = @{ $neighbor };
             my $dist = $cost + $weight_n;
             if (!defined $dist{$vert_n} || $dist < $dist{$vert_n}) {
