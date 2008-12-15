@@ -41,7 +41,7 @@ sub edges {
 sub neighbors {
     my $self = shift;
     my ($from) = @_;
-    return $self->($from);
+    return map { $$_[0] } $self->($from);
 }
 
 sub is_bipartite {
@@ -143,7 +143,7 @@ sub astar {
             ($max_vert, $max_score) = ($vertex, $score)
                 if ($score > $max_score);
         }
-        $neighbors{$vertex} = [$self->neighbors($vertex)]
+        $neighbors{$vertex} = [$self->($vertex)]
             unless exists $neighbors{$vertex};
         for my $neighbor (@{ $neighbors{$vertex} }) {
             my ($vert_n, $weight_n) = @{ $neighbor };
