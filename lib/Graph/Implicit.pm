@@ -171,4 +171,16 @@ sub johnson {
 sub floyd_warshall {
 }
 
+# misc utility functions
+
+sub make_path {
+    my ($pred, $end) = @_;
+    my @path;
+    while (defined $end) {
+        push @path, $end;
+        $end = $pred->{$end};
+    }
+    return reverse @path;
+}
+
 1;
