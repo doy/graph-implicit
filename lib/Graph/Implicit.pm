@@ -3,6 +3,7 @@ use strict;
 use warnings;
 package Graph::Implicit;
 use Heap::Simple;
+use List::MoreUtils qw/apply/;
 
 =for example
 
@@ -41,6 +42,25 @@ sub neighbors {
     my $self = shift;
     my ($from) = @_;
     return $self->($from);
+}
+
+sub is_bipartite {
+    my $self = shift;
+    my ($from) = @_;
+    my $ret = 1;
+    BIPARTITE: {
+        my %colors = ($from => 0);
+        no warnings 'exiting';
+        $self->bfs($from, sub {
+            my $vertex = $_[1];
+            apply {
+                last BIPARTITE if $colors{$vertex} == $colors{$_};
+                $colors{$_} = not $colors{$vertex};
+            } $self->neighbors($vertex)
+        });
+        return 1;
+    }
+    return 0;
 }
 
 # traversal
