@@ -57,7 +57,7 @@ my %reachable_edges = (
     e => [map { @{ $edges{$_} } } @{ $reachable{e} }],
     f => [map { @{ $edges{$_} } } @{ $reachable{f} }],
     g => [map { @{ $edges{$_} } } @{ $reachable{g} }],
-    h => [map { @{ $edges{$_} } } @{ $reachable{h} }], # [[g=>g],[h=>f],[h=>g]]
+    h => [map { @{ $edges{$_} } } @{ $reachable{h} }],
 );
 for my $vertex (qw/a b c d e f g h/) {
     cmp_bag([$graph->edges($vertex)], $reachable_edges{$vertex},
