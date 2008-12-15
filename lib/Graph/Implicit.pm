@@ -44,6 +44,8 @@ sub neighbors {
     return map { $$_[0] } $self->($from);
 }
 
+# more complicated graph properties
+
 sub is_bipartite {
     my $self = shift;
     my ($from) = @_;
