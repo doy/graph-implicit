@@ -58,7 +58,7 @@ sub _traversal {
         my ($pred, $vertex) = @{ $remove->(\@bag) };
         if (not exists $marked{$vertex}) {
             $code->($pred, $vertex);
-            $pred{$vertex} = $pred;
+            $pred{$vertex} = $pred if defined wantarray;
             $marked{$vertex} = 1;
             $insert->(\@bag, $_) for $self->neighbors($vertex);
         }
