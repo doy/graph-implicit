@@ -44,27 +44,6 @@ sub neighbors {
     return map { $$_[0] } $self->($from);
 }
 
-# more complicated graph properties
-
-sub is_bipartite {
-    my $self = shift;
-    my ($from) = @_;
-    my $ret = 1;
-    BIPARTITE: {
-        my %colors = ($from => 0);
-        no warnings 'exiting';
-        $self->bfs($from, sub {
-            my $vertex = $_[1];
-            apply {
-                last BIPARTITE if $colors{$vertex} == $colors{$_};
-                $colors{$_} = not $colors{$vertex};
-            } $self->neighbors($vertex)
-        });
-        return 1;
-    }
-    return 0;
-}
-
 # traversal
 
 sub _traversal {
@@ -180,7 +159,28 @@ sub johnson {
 sub floyd_warshall {
 }
 
-# other (?)
+# non-trivial graph properties
+
+sub is_bipartite {
+    my $self = shift;
+    my ($from) = @_;
+    my $ret = 1;
+    BIPARTITE: {
+        my %colors = ($from => 0);
+        no warnings 'exiting';
+        $self->bfs($from, sub {
+            my $vertex = $_[1];
+            apply {
+                last BIPARTITE if $colors{$vertex} == $colors{$_};
+                $colors{$_} = not $colors{$vertex};
+            } $self->neighbors($vertex)
+        });
+        return 1;
+    }
+    return 0;
+}
+
+# sorting
 
 sub topological_sort {
 }
