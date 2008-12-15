@@ -67,8 +67,6 @@ sub is_bipartite {
 
 # traversal
 
-# XXX: if we can generalize @bag to allow for a heap, then we can implement
-# prim with this too
 sub _traversal {
     my $self = shift;
     my ($start, $code, $create, $notempty, $insert, $remove) = @_;
@@ -117,6 +115,13 @@ sub boruvka {
 }
 
 sub prim {
+    my $self = shift;
+    my ($start, $code) = @_;
+    return $self->_traversal($start, $code,
+                             sub { Heap::Simple->new(elements => 'Any') },
+                             sub { $_[0]->count },
+                             sub { $_[0]->key_insert($_[2], $_[1]) },
+                             sub { $_[0]->extract_top });
 }
 
 sub kruskal {
