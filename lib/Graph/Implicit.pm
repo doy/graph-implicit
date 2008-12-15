@@ -171,6 +171,11 @@ sub johnson {
 sub floyd_warshall {
 }
 
+# other (?)
+
+sub topological_sort {
+}
+
 # misc utility functions
 
 sub make_path {
