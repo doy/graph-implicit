@@ -82,7 +82,7 @@ sub _traversal {
             $code->($pred, $vertex);
             $pred{$vertex} = $pred if defined wantarray;
             $marked{$vertex} = 1;
-            $insert->(\@bag, $_) for $self->neighbors($vertex);
+            $insert->(\@bag, [$vertex, $_]) for $self->neighbors($vertex);
         }
     }
     return \%pred;
