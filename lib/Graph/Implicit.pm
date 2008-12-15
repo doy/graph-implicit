@@ -71,18 +71,18 @@ sub is_bipartite {
 # prim with this too
 sub _traversal {
     my $self = shift;
-    my ($start, $code, $insert, $remove) = @_;
-    my @bag;
+    my ($start, $code, $create, $notempty, $insert, $remove) = @_;
+    my $bag = $create->();
     my %marked;
     my %pred;
-    $insert->(\@bag, [undef, $start]);
-    while (@bag) {
-        my ($pred, $vertex) = @{ $remove->(\@bag) };
+    $insert->($bag, [undef, $start], 0);
+    while ($notempty->($bag)) {
+        my ($pred, $vertex) = @{ $remove->($bag) };
         if (not exists $marked{$vertex}) {
             $code->($pred, $vertex);
             $pred{$vertex} = $pred if defined wantarray;
             $marked{$vertex} = 1;
-            $insert->(\@bag, [$vertex, $_]) for $self->neighbors($vertex);
+            $insert->($bag, [$vertex, $$_[0]], $$_[1]) for $self->($vertex);
         }
     }
     return \%pred;
@@ -92,6 +92,8 @@ sub bfs {
     my $self = shift;
     my ($start, $code) = @_;
     return $self->_traversal($start, $code,
+                             sub { [] },
+                             sub { @{ $_[0] } },
                              sub { push @{ $_[0] }, $_[1] },
                              sub { shift @{ $_[0] } });
 }
@@ -100,6 +102,8 @@ sub dfs {
     my $self = shift;
     my ($start, $code) = @_;
     return $self->_traversal($start, $code,
+                             sub { [] },
+                             sub { @{ $_[0] } },
                              sub { push @{ $_[0] }, $_[1] },
                              sub { pop @{ $_[0] } });
 }
