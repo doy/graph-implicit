@@ -40,24 +40,12 @@ for my $vertex (qw/a b c d e f g h/) {
             "calculated vertices reachable from $vertex correctly");
 }
 my %edges = (
-    a => [map { [a => $_] } @{ $graph{a} }],
-    b => [map { [b => $_] } @{ $graph{b} }],
-    c => [map { [c => $_] } @{ $graph{c} }],
-    d => [map { [d => $_] } @{ $graph{d} }],
-    e => [map { [e => $_] } @{ $graph{e} }],
-    f => [map { [f => $_] } @{ $graph{f} }],
-    g => [map { [g => $_] } @{ $graph{g} }],
-    h => [map { [h => $_] } @{ $graph{h} }],
+    map { my $v = $_; $v => [map { [$v => $_] } @{ $graph{$v} }] }
+        qw/a b c d e f g h/,
 );
 my %reachable_edges = (
-    a => [map { @{ $edges{$_} } } @{ $reachable{a} }],
-    b => [map { @{ $edges{$_} } } @{ $reachable{b} }],
-    c => [map { @{ $edges{$_} } } @{ $reachable{c} }],
-    d => [map { @{ $edges{$_} } } @{ $reachable{d} }],
-    e => [map { @{ $edges{$_} } } @{ $reachable{e} }],
-    f => [map { @{ $edges{$_} } } @{ $reachable{f} }],
-    g => [map { @{ $edges{$_} } } @{ $reachable{g} }],
-    h => [map { @{ $edges{$_} } } @{ $reachable{h} }],
+    map { $_ => [map { @{ $edges{$_} } } @{ $reachable{$_} }] }
+        qw/a b c d e f g h/,
 );
 for my $vertex (qw/a b c d e f g h/) {
     cmp_bag([$graph->edges($vertex)], $reachable_edges{$vertex},
