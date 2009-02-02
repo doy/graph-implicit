@@ -52,6 +52,7 @@ sub _traversal {
     my $bag = $create->();
     my %marked;
     my %pred;
+    $pred{$start} = undef;
     $insert->($bag, [undef, $start], 0);
     while ($notempty->($bag)) {
         my ($pred, $vertex) = @{ $remove->($bag) };
