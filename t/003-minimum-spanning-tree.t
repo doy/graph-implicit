@@ -67,7 +67,9 @@ my $edge_calculator = sub {
     return @{ $graph{$vertex} };
 };
 
+SKIP: {
 my $graph = Graph::Implicit->new($edge_calculator);
+skip "not implemented yet", 6 unless $graph->can('prim');
 for my $traversal (qw/prim/) {
     for my $vertex (keys %mst) {
         my @visited;
@@ -79,4 +81,5 @@ for my $traversal (qw/prim/) {
         cmp_deeply($tree, $mst{$vertex},
                    "$traversal is the mst from $vertex");
     }
+}
 }
