@@ -86,26 +86,28 @@ sub dfs {
                              sub { pop @{ $_[0] } });
 }
 
-sub iddfs {
-}
+#sub iddfs {
+#}
 
 # minimum spanning tree
 
-sub boruvka {
-}
+#sub boruvka {
+#}
 
-sub prim {
-    my $self = shift;
-    my ($start, $code) = @_;
-    return $self->_traversal($start, $code,
-                             sub { Heap::Simple->new(elements => 'Any') },
-                             sub { $_[0]->count },
-                             sub { $_[0]->key_insert($_[2], $_[1]) },
-                             sub { $_[0]->extract_top });
-}
+# XXX: this algo only works in its current form for undirected graphs with
+# unique edge weights
+#sub prim {
+    #my $self = shift;
+    #my ($start, $code) = @_;
+    #return $self->_traversal($start, $code,
+                             #sub { Heap::Simple->new(elements => 'Any') },
+                             #sub { $_[0]->count },
+                             #sub { $_[0]->key_insert($_[2], $_[1]) },
+                             #sub { $_[0]->extract_top });
+#}
 
-sub kruskal {
-}
+#sub kruskal {
+#}
 
 # single source shortest path
 
@@ -149,16 +151,16 @@ sub astar {
     return \%pred, $max_vert;
 }
 
-sub bellman_ford {
-}
+#sub bellman_ford {
+#}
 
 # all pairs shortest path
 
-sub johnson {
-}
+#sub johnson {
+#}
 
-sub floyd_warshall {
-}
+#sub floyd_warshall {
+#}
 
 # non-trivial graph properties
 
@@ -183,8 +185,8 @@ sub is_bipartite {
 
 # sorting
 
-sub topological_sort {
-}
+#sub topological_sort {
+#}
 
 # misc utility functions
 
