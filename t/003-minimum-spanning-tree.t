@@ -62,7 +62,7 @@ my %mst = (
 );
 my $edge_calculator = sub {
     my $vertex = shift;
-    return $graph{$vertex};
+    return @{ $graph{$vertex} };
 };
 
 my $graph = Graph::Implicit->new($edge_calculator);
