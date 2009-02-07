@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More tests => 6;
 use Test::Deep;
 use Graph::Implicit;
 use List::MoreUtils qw/pairwise/;
@@ -57,8 +57,10 @@ my %reachable = (
     h => [qw/          f g h/],
 );
 my %mst = (
-    d => {a => 'd', b => 'd', c => 'a', d => undef,
-          e => 'c', f => 'b', g => 'h', h => 'd'},
+    a => {a => undef, b => 'd',   c => 'a',   d => 'e',
+          e => 'c',   f => 'b',   g => 'h',   h => 'd'},
+    d => {a => 'd',   b => 'd',   c => 'a',   d => undef,
+          e => 'c',   f => 'b',   g => 'h',   h => 'd'},
 );
 my $edge_calculator = sub {
     my $vertex = shift;
@@ -67,7 +69,7 @@ my $edge_calculator = sub {
 
 my $graph = Graph::Implicit->new($edge_calculator);
 for my $traversal (qw/prim/) {
-    for my $vertex (qw/d/) {
+    for my $vertex (keys %mst) {
         my @visited;
         my $tree = $graph->$traversal($vertex, sub { push @visited, $_[1] });
         cmp_bag(\@visited, $reachable{$vertex},
