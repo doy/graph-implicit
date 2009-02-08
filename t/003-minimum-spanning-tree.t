@@ -70,16 +70,16 @@ my $edge_calculator = sub {
 SKIP: {
 my $graph = Graph::Implicit->new($edge_calculator);
 skip "not implemented yet", 6 unless $graph->can('prim');
-for my $traversal (qw/prim/) {
+for my $spanning_tree (qw/prim/) {
     for my $vertex (keys %mst) {
         my @visited;
-        my $tree = $graph->$traversal($vertex, sub { push @visited, $_[1] });
+        my $tree = $graph->$spanning_tree($vertex, sub { push @visited, $_[1] });
         cmp_bag(\@visited, $reachable{$vertex},
-                "$traversal visits each node exactly once from $vertex");
+                "$spanning_tree visits each node exactly once from $vertex");
         ok(is_tree($tree),
-           "$traversal creates a tree from $vertex");
+           "$spanning_tree creates a tree from $vertex");
         cmp_deeply($tree, $mst{$vertex},
-                   "$traversal is the mst from $vertex");
+                   "$spanning_tree is the mst from $vertex");
     }
 }
 }
