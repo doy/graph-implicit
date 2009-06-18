@@ -4,12 +4,19 @@ package Graph::Implicit;
 use Heap::Simple;
 use List::MoreUtils qw/apply/;
 
-=for example
+=head1 NAME
 
-sub {
-    map { [$_, $_->intrinsic_cost] }
-        shift->grep_adjacent(sub { shift->is_walkable })
-}
+Graph::Implicit - graph algorithms for implicitly specified graphs
+
+=head1 SYNOPSIS
+
+
+=head1 DESCRIPTION
+
+
+=cut
+
+=head1 CONSTRUCTOR
 
 =cut
 
@@ -18,6 +25,10 @@ sub new {
     my $edge_calculator = shift;
     return bless $edge_calculator, $class;
 }
+
+=head1 METHODS
+
+=cut
 
 # generic information
 
@@ -199,4 +210,69 @@ sub make_path {
     return reverse @path;
 }
 
+=head1 BUGS
+
+No known bugs.
+
+Please report any bugs through RT: email
+C<bug-graph-implicit at rt.cpan.org>, or browse to
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Graph-Implicit>.
+
+=head1 SEE ALSO
+
+L<Moose>
+
+=head1 SUPPORT
+
+You can find this documentation for this module with the perldoc command.
+
+    perldoc Graph::Implicit
+
+You can also look for information at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/Graph-Implicit>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/Graph-Implicit>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Graph-Implicit>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/Graph-Implicit>
+
+=back
+
+=head1 AUTHOR
+
+  Jesse Luehrs <doy at tozt dot net>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2009 by Jesse Luehrs.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as perl itself.
+
+=cut
+
 1;
+
+__END__
+
+=for example
+
+sub {
+    map { [$_, $_->intrinsic_cost] }
+        shift->grep_adjacent(sub { shift->is_walkable })
+}
+
+=cut
+
