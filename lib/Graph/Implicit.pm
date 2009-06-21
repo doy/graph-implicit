@@ -201,6 +201,7 @@ sub is_bipartite {
 # misc utility functions
 
 sub make_path {
+    my $self = shift;
     my ($pred, $end) = @_;
     my @path;
     while (defined $end) {

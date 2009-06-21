@@ -18,7 +18,7 @@ my ($paths, $blah) = $graph->dijkstra("0 0");
 my @paths;
 my $bottom_row = @triangle - 1;
 for my $i (0..$bottom_row) {
-    push @paths, [Graph::Implicit::make_path($paths, "$bottom_row $i")];
+    push @paths, [$graph->make_path($paths, "$bottom_row $i")];
 }
 my @path_values = map { [map { my ($x, $y) = split; $triangle[$x][$y] } @$_] }
                       @paths;
