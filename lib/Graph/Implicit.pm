@@ -10,6 +10,18 @@ Graph::Implicit - graph algorithms for implicitly specified graphs
 
 =head1 SYNOPSIS
 
+  my $graph = Graph::Implicit->new(sub {
+      my $tile = shift;
+      map { [$_, $_->intrinsic_cost] }
+          $tile->grep_adjacent(sub { $_[0]->is_walkable })
+  });
+  my @reachable_vertices = $graph->vertices;
+  my @reachable_edges = $graph->edges;
+  my ($sssp_predecessors, $dest_vertex) = $graph->dijkstra(
+      current_tile(),
+      sub { is_target($_[0]) ? 'q' : 0 },
+  );
+  my @sssp_path = $graph->make_path($sssp_predecessors, $dest_vertex);
 
 =head1 DESCRIPTION
 
@@ -265,15 +277,3 @@ the same terms as perl itself.
 =cut
 
 1;
-
-__END__
-
-=for example
-
-sub {
-    map { [$_, $_->intrinsic_cost] }
-        shift->grep_adjacent(sub { shift->is_walkable })
-}
-
-=cut
-
