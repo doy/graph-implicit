@@ -312,6 +312,18 @@ Please report any bugs through RT: email
 C<bug-graph-implicit at rt.cpan.org>, or browse to
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Graph-Implicit>.
 
+=head1 TODO
+
+=over
+
+=item dijkstra/astar and bfs/dfs should have more similar interfaces - right now bfs/dfs just call a coderef and do nothing with it, while dijkstra/astar use the coderef to search for a vertex
+
+=item Several more graph algorithms need implementations
+
+=item Returning two values from dijkstra and astar is kind of ugly, need to make this better
+
+=back
+
 =head1 SEE ALSO
 
 L<Moose>
