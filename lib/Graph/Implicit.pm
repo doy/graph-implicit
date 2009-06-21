@@ -54,6 +54,12 @@ sub new {
 
 # generic information
 
+=head2 vertices(VERTEX)
+
+Returns a list of all vertices reachable from the given vertex.
+
+=cut
+
 sub vertices {
     my $self = shift;
     my ($start) = @_;
@@ -62,6 +68,12 @@ sub vertices {
     return @vertices;
 }
 
+=head2 edges(VERTEX)
+
+Returns a list of all edges reachable from the given vertex.
+
+=cut
+
 # XXX: probably pretty inefficient... can we do better?
 sub edges {
     my $self = shift;
@@ -69,6 +81,12 @@ sub edges {
     map { my $v = $_; map { [$v, $_] } $self->neighbors($v) }
         $self->vertices($start);
 }
+
+=head2 neighbors(VERTEX)
+
+Returns a list of neighbors (without weights) of the given vertex.
+
+=cut
 
 sub neighbors {
     my $self = shift;
@@ -98,6 +116,15 @@ sub _traversal {
     return \%pred;
 }
 
+=head2 bfs(VERTEX[, CODEREF])
+
+Does a breadth-first search of the graph, starting at the given vertex. It runs
+the given coderef (if it exists) on each vertex, as they are encountered.
+Returns a hashref, whose keys are the encountered vertices, and whose values
+are the predecessor in the breadth-first search tree.
+
+=cut
+
 sub bfs {
     my $self = shift;
     my ($start, $code) = @_;
@@ -107,6 +134,15 @@ sub bfs {
                              sub { push @{ $_[0] }, $_[1] },
                              sub { shift @{ $_[0] } });
 }
+
+=head2 dfs(VERTEX[, CODEREF])
+
+Does a depth-first search of the graph, starting at the given vertex. It runs
+the given coderef (if it exists) on each vertex, as they are encountered.
+Returns a hashref, whose keys are the encountered vertices, and whose values
+are the predecessor in the depth-first search tree.
+
+=cut
 
 sub dfs {
     my $self = shift;
@@ -143,11 +179,32 @@ sub dfs {
 
 # single source shortest path
 
+=head2 dijkstra(VERTEX[, CODEREF])
+
+Runs the Dijkstra single source shortest path algorithm, starting from the
+given vertex. It also takes a single coderef as an argument, which is called on
+each vertex as it is encountered - this coderef is expected to return a score
+for the vertex. If the returned score is C<'q'>, then the search terminates
+immediately, otherwise it keeps track of the vertex with the highest score.
+This returns two items: a predicate hashref like the return value of L</bfs>
+and L</dfs>, and the vertex which was scored highest by the scorer coderef
+(or the vertex that returned C<'q'>).
+
+=cut
+
 sub dijkstra {
     my $self = shift;
     my ($from, $scorer) = @_;
     return $self->astar($from, sub { 0 }, $scorer);
 }
+
+=head2 astar(VERTEX, CODEREF[, CODEREF])
+
+Runs the A* single source shortest path algorithm. Similar to L</dijkstra>, but
+takes an additional coderef parameter (before the scorer coderef), for the
+heuristic function that the A* algorithm requires.
+
+=cut
 
 sub astar {
     my $self = shift;
@@ -196,6 +253,13 @@ sub astar {
 
 # non-trivial graph properties
 
+=head2 is_bipartite(VERTEX)
+
+Returns whether or not the reachable part of the graph from the given vertex is
+bipartite.
+
+=cut
+
 sub is_bipartite {
     my $self = shift;
     my ($from) = @_;
@@ -221,6 +285,13 @@ sub is_bipartite {
 #}
 
 # misc utility functions
+
+=head2 make_path(HASHREF, VERTEX)
+
+Takes a predecessor hashref and an ending vertex, and returns the list of
+vertices traversed to get from the start vertex to the given ending vertex.
+
+=cut
 
 sub make_path {
     my $self = shift;
