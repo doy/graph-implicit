@@ -15,8 +15,8 @@ Graph::Implicit - graph algorithms for implicitly specified graphs
       map { [$_, $_->intrinsic_cost] }
           $tile->grep_adjacent(sub { $_[0]->is_walkable })
   });
-  my @reachable_vertices = $graph->vertices;
-  my @reachable_edges = $graph->edges;
+  my @reachable_vertices = $graph->vertices(current_tile());
+  my @reachable_edges = $graph->edges(current_tile());
   my ($sssp_predecessors, $dest_vertex) = $graph->dijkstra(
       current_tile(),
       sub { is_target($_[0]) ? 'q' : 0 },
