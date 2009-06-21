@@ -30,6 +30,16 @@ Graph::Implicit - graph algorithms for implicitly specified graphs
 
 =head1 CONSTRUCTOR
 
+=head2 new(CODEREF)
+
+The constructor takes a single argument, a coderef. This coderef should take
+something representing a vertex, and return a list of arrayrefs, one for each
+adjacent vertex, which have the vertex as the first element and the weight of
+the edge to that vertex as the second element. For example, if the graph has
+three elements A, B, and C, and there is an edge of weight 1 from B to A and an
+edge of weight 2 from B to C, then the coderef should return C<["A", 1], ["C",
+2]> when called with C<"B"> as its argument.
+
 =cut
 
 sub new {
