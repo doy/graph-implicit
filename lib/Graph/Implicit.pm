@@ -107,7 +107,7 @@ sub _traversal {
     while ($notempty->($bag)) {
         my ($pred, $vertex) = @{ $remove->($bag) };
         if (not exists $marked{$vertex}) {
-            $code->($pred, $vertex);
+            $code->($pred, $vertex) if $code;
             $pred{$vertex} = $pred if defined wantarray;
             $marked{$vertex} = 1;
             $insert->($bag, [$vertex, $$_[0]], $$_[1]) for $self->($vertex);
