@@ -345,7 +345,7 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Graph-Implicit>.
 
 =head1 SEE ALSO
 
-L<Moose>
+L<Graph>
 
 =head1 SUPPORT
 
