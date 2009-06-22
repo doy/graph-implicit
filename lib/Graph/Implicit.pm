@@ -25,6 +25,25 @@ Graph::Implicit - graph algorithms for implicitly specified graphs
 
 =head1 DESCRIPTION
 
+This module implements several graph algorithms (for directed, weighted graphs)
+that can run without having to specify the actual graph. This module models a
+graph as an arbitrary coderef that maps vertices onto a list of adjacent
+vertices and weights for the edges to those vertices. Vertices can be
+represented by any string (or stringifyable piece of data), and don't need to
+be specified ahead of time; the algorithms will just figure it out. This allows
+objects to generally just work (they get stringified to
+C<"Class=HASH(0xdeadbeef)">).
+
+Some caveats: working with complicated data structures which need deep
+comparisons generally need additional help: C<[0, 1, 2] ne [0, 1, 2]>, since
+those become different references. Also, since the graph isn't specified at
+all, each method that is called on one needs a vertex to start traversing the
+graph from, and any vertices not reachable from that vertex won't be found. A
+few algorithms are also not able to be implemented as efficiently as possible,
+since the entire graph isn't known ahead of time; for instance, finding all the
+edges of the graph requires actually doing a grpah traversal, rather than just
+reading them out of the data structure, like you would do in an explicit graph
+representation.
 
 =cut
 
