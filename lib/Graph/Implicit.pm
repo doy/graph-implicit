@@ -41,7 +41,7 @@ all, each method that is called on one needs a vertex to start traversing the
 graph from, and any vertices not reachable from that vertex won't be found. A
 few algorithms are also not able to be implemented as efficiently as possible,
 since the entire graph isn't known ahead of time; for instance, finding all the
-edges of the graph requires actually doing a grpah traversal, rather than just
+edges of the graph requires actually doing a graph traversal, rather than just
 reading them out of the data structure, like you would do in an explicit graph
 representation.
 
