@@ -323,6 +323,10 @@ sub make_path {
     return reverse @path;
 }
 
+=head1 NOTES
+
+This module uses L<Heap::Simple> for several of the algorithms. Unfortunately, L<Heap::Simple> doesn't provide a default implementation, so this module depends explicitly on L<Heap::Simple::Perl>, to avoid XS dependencies. The L</dijkstra> and L</astar> algorithms will run much faster if you install L<Heap::Simple::XS> manually.
+
 =head1 BUGS
 
 No known bugs.
