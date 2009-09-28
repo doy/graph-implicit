@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 package Graph::Implicit;
-use Heap::Simple;
+use Heap::Fibonacci::Fast;
 use List::MoreUtils qw/apply/;
 
 =head1 NAME
@@ -187,7 +187,7 @@ sub dfs {
     #my $self = shift;
     #my ($start, $code) = @_;
     #return $self->_traversal($start, $code,
-                             #sub { Heap::Simple->new(elements => 'Any') },
+                             #sub { Heap::Fibonacci::Fast->new },
                              #sub { $_[0]->count },
                              #sub { $_[0]->key_insert($_[2], $_[1]) },
                              #sub { $_[0]->extract_top });
@@ -229,7 +229,7 @@ sub astar {
     my $self = shift;
     my ($from, $heuristic, $scorer) = @_;
 
-    my $pq = Heap::Simple->new(elements => "Any");
+    my $pq = Heap::Fibonacci::Fast->new;
     my %neighbors;
     my ($max_vert, $max_score) = (undef, 0);
     my %dist = ($from => 0);
@@ -322,10 +322,6 @@ sub make_path {
     }
     return reverse @path;
 }
-
-=head1 NOTES
-
-This module uses L<Heap::Simple> for several of the algorithms. Unfortunately, L<Heap::Simple> doesn't provide a default implementation, so this module depends explicitly on L<Heap::Simple::Perl>, to avoid XS dependencies. The L</dijkstra> and L</astar> algorithms will run much faster if you install L<Heap::Simple::XS> manually.
 
 =head1 BUGS
 
