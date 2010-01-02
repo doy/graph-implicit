@@ -1,6 +1,6 @@
+package Graph::Implicit;
 use strict;
 use warnings;
-package Graph::Implicit;
 use Heap::Fibonacci::Fast;
 use List::MoreUtils qw/apply/;
 
